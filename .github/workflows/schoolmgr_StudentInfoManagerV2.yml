@@ -2,9 +2,9 @@ name: schoolmgr_StudentInfoManagerV2
 
 
 on:
-  repository_dispatch:
-    types:
-      - schoolmgr_StudentInfoManagerV2
+  # repository_dispatch:
+  #   types:
+  #     - schoolmgr_StudentInfoManagerV2
   push:
     branches: [ '*' ]
   pull_request:
