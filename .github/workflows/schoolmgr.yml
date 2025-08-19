@@ -167,19 +167,39 @@ jobs:
           
           bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/publish_agent.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
+          # 编译web 系统
+          bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/build_web.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
           
-          # cd webui
-          # npm install
-          # cd -
-          # # 发布到麦小
-          # echo "发布到md"
-          # bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/build_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          # 发布web系统
+          bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/publish_web.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          
+          # 编译h5 web 系统
+          bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/build_h5_web.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          
+          # 发布h5 web系统
+          bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/publish_h5_web.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          
+          
+          
+          
+          # 部署测试环境
+          bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/develop/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          
+          
+          # 麦小
+          echo "部署麦小"
+          bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/maixiao/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          
+          # 部署 观澜 old
+          echo "部署观澜小学 old"
+          bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/guanlan_old/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          
+          # 观澜
+          echo "部署观澜小学"
+          bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/guanlan/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
-          # bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/maixiao/deploy_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
-          # # 发布到观澜
-          # echo "发布到gl"
-          # bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/guanlan/deploy_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+
         working-directory: ./${{ github.event.client_payload.project_name }}
 
 
