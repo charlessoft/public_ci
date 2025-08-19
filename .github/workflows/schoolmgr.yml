@@ -63,7 +63,9 @@ jobs:
 
       - name: Clone ${{  github.event.client_payload.project_name }}
         run: |
-         git clone -b ${{ github.event.client_payload.mybranch }} ${{ github.event.client_payload.git_url }} ./${{  github.event.client_payload.project_name }}
+         BRANCH_NAME=$(echo "${{ github.event.client_payload.mybranch }}" | sed 's|refs/heads/||')
+         echo $BRANCH_NAME
+         git clone -b ${{ BRANCH_NAME }} ${{ github.event.client_payload.git_url }} ./${{  github.event.client_payload.project_name }}
          git clone git@gitee.com:charlesabc/myutils.git ./${{  github.event.client_payload.project_name }}/myutils
 
 
