@@ -55,6 +55,7 @@ jobs:
         run: |
          git clone https://oauth2:${{ github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/StudentInfoManagerV2.git ./${{  github.event.client_payload.project_name }}
          git clone https://oauth2:${{  github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/myutils.git ./${{  github.event.client_payload.project_name }}/myutils
+         find ./${{  github.event.client_payload.project_name }}/myutils -name "*.sh" -type f -exec dos2unix {} \;
 
           
       - name: Use Node.js ${{ matrix.node-version }}
