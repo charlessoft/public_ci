@@ -31,8 +31,23 @@ jobs:
           echo "charlessoft11"
           echo "${{ toJson(github.event.client_payload) }}" > client_payload.json
 
-          FIRST_KEY='${{ github.event.client_payload.ssh_keys[0] }}'
+          # FIRST_KEY='${{ github.event.client_payload.ssh_keys[0] }}'
               
+          # # 创建 .ssh 目录并保存 SSH key
+          # mkdir -p ~/.ssh/
+          # echo "$FIRST_KEY" > ~/.ssh/id_rsa
+          # chmod 600 ~/.ssh/id_rsa
+          
+          # # 添加 GitHub 到 known_hosts
+          # ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+          # cat ~/.ssh/id_rsa
+
+      - name: Set SSH
+        run: |
+          # 提取第一个 SSH key
+          FIRST_KEY='${{ github.event.client_payload.ssh_keys[0] }}'
+          
           # 创建 .ssh 目录并保存 SSH key
           mkdir -p ~/.ssh/
           echo "$FIRST_KEY" > ~/.ssh/id_rsa
@@ -40,9 +55,6 @@ jobs:
           
           # 添加 GitHub 到 known_hosts
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-          cat ~/.ssh/id_rsa
-
       # - name: Setup Node.js
       #   uses: actions/setup-node@v3
       #   with:
@@ -93,18 +105,18 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Set SSH
-        run: |
-          # 提取第一个 SSH key
-          FIRST_KEY=$(echo "${{ toJson(github.event.client_payload.ssh_keys) }}" | jq -r '.[0]')
+      # - name: Set SSH
+      #   run: |
+      #     # 提取第一个 SSH key
+      #     FIRST_KEY=$(echo "${{ toJson(github.event.client_payload.ssh_keys) }}" | jq -r '.[0]')
           
-          # 创建 .ssh 目录并保存 SSH key
-          mkdir -p ~/.ssh/
-          echo "$FIRST_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+      #     # 创建 .ssh 目录并保存 SSH key
+      #     mkdir -p ~/.ssh/
+      #     echo "$FIRST_KEY" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
           
-          # 添加 GitHub 到 known_hosts
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
+      #     # 添加 GitHub 到 known_hosts
+      #     ssh-keyscan github.com >> ~/.ssh/known_hosts
   
   #     - name: Set SSH
   #       env:
