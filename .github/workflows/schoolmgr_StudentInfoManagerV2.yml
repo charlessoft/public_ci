@@ -145,10 +145,10 @@ jobs:
           npm install
           cd -
           # 发布到麦小
-          sh ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/build_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/build_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
           # 发布到观澜
-          sh ${WORKSPACE}/myutils/StudentInfoManagerV2/scripts/guanlan/deploy_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          bash ${WORKSPACE}/myutils/StudentInfoManagerV2/scripts/guanlan/deploy_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
         working-directory: ./${{ github.event.client_payload.project_name }}
 
 
