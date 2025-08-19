@@ -22,7 +22,8 @@ env:
 jobs:
   init:
     if: github.repository_owner == 'charlessoft'
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: init
         run: |
