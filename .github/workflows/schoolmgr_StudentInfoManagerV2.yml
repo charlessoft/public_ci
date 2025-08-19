@@ -157,7 +157,7 @@ jobs:
           cd -
           
           cd webui
-          # npm install
+          npm install
           cd -
           # 发布到麦小
           echo "发布到md"
