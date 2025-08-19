@@ -49,22 +49,22 @@ jobs:
       #   with:
       #     node-version: '16.14.0'
 
-      # - name: Install dding on non-Windows
-      #   if: runner.os != 'Windows'
-      #   run: |
-      #     pip install dding
-      #     mkdir -p ~/.dding
-      #     dding_secret="${{ github.event.client_payload.dding_token.secret || env.DEFAULT_DDING_SECRET }}"
-      #     dding_token="${{ github.event.client_payload.dding_token.token || env.DEFAULT_DDING_TOKEN }}"
-      #     cat <<EOF > ~/.dding/config.json
-      #     [
-      #         {
-      #             "group": "default",
-      #             "secret": "$dding_secret",
-      #             "token": "$dding_token"
-      #         }
-      #     ]
-      #     EOF
+      - name: Install dding on non-Windows
+        if: runner.os != 'Windows'
+        run: |
+          pip install dding
+          mkdir -p ~/.dding
+          dding_secret="${{ github.event.client_payload.dding_token.secret || env.DEFAULT_DDING_SECRET }}"
+          dding_token="${{ github.event.client_payload.dding_token.token || env.DEFAULT_DDING_TOKEN }}"
+          cat <<EOF > ~/.dding/config.json
+          [
+              {
+                  "group": "default",
+                  "secret": "$dding_secret",
+                  "token": "$dding_token"
+              }
+          ]
+          EOF
 
       # - name: clone git code
       #   run: |
