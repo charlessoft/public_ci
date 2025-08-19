@@ -143,7 +143,10 @@ jobs:
           pwd
           ls
           echo "========="
+          cd ${UTILS_DIR}
           source ${UTILS_DIR}/utils.sh
+          cd -
+          
           cd webui
           npm install
           cd -
