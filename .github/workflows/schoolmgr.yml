@@ -170,33 +170,40 @@ jobs:
 
           # 编译web 系统
           bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/build_web.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
-          
+
+          echo "build web system======>"
           # 发布web系统
           bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/publish_web.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
           
           # 编译h5 web 系统
+          echo "build h5 web system======>"
           bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/build_h5_web.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
           
           # 发布h5 web系统
+          echo "publish web system======>"
           bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/publish_h5_web.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
           
           
           
           
           # 部署测试环境
+          echo "deploy dev environment ======>"
           bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/develop/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
           
           
           # 麦小
           echo "部署麦小"
+          echo "docker_deploy md environment ======>"
           bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/maixiao/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
           
           # 部署 观澜 old
           echo "部署观澜小学 old"
+          echo "docker_deploy gl old environment ======>"
           bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/guanlan_old/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
           
           # 观澜
           echo "部署观澜小学"
+          echo "docker_deploy gl  environment ======>"
           bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/guanlan/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
 
