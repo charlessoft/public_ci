@@ -32,32 +32,32 @@ jobs:
 
           echo "${{ toJson(github.event.client_payload) }}" > client_payload.json
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16.14.0'
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: '16.14.0'
 
-      - name: Install dding on non-Windows
-        if: runner.os != 'Windows'
-        run: |
-          pip install dding
-          mkdir -p ~/.dding
-          dding_secret="${{ github.event.client_payload.dding_token.secret || env.DEFAULT_DDING_SECRET }}"
-          dding_token="${{ github.event.client_payload.dding_token.token || env.DEFAULT_DDING_TOKEN }}"
-          cat <<EOF > ~/.dding/config.json
-          [
-              {
-                  "group": "default",
-                  "secret": "$dding_secret",
-                  "token": "$dding_token"
-              }
-          ]
-          EOF
+      # - name: Install dding on non-Windows
+      #   if: runner.os != 'Windows'
+      #   run: |
+      #     pip install dding
+      #     mkdir -p ~/.dding
+      #     dding_secret="${{ github.event.client_payload.dding_token.secret || env.DEFAULT_DDING_SECRET }}"
+      #     dding_token="${{ github.event.client_payload.dding_token.token || env.DEFAULT_DDING_TOKEN }}"
+      #     cat <<EOF > ~/.dding/config.json
+      #     [
+      #         {
+      #             "group": "default",
+      #             "secret": "$dding_secret",
+      #             "token": "$dding_token"
+      #         }
+      #     ]
+      #     EOF
 
-      - name: clone git code
-        run: |
-         git clone https://oauth2:${{ github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/StudentInfoManagerV2.git ./StudentInfoManagerV2
-         git clone https://oauth2:${{  github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/myutils.git ./StudentInfoManagerV2/myutils
+      # - name: clone git code
+      #   run: |
+      #    git clone https://oauth2:${{ github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/StudentInfoManagerV2.git ./StudentInfoManagerV2
+      #    git clone https://oauth2:${{  github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/myutils.git ./StudentInfoManagerV2/myutils
       # - name: Setup Debug Session
       #   uses: csexton/debugger-action@master
   frontend:
@@ -87,7 +87,7 @@ jobs:
         id: get_branch
         run: |
           echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
-          echo "UTILS_DIR=${PWD}/quick-spider-admin/myutils" >> $GITHUB_ENV
+          echo "UTILS_DIR=${PWD}/${{ github.event.client_payload.project_name }}/myutils" >> $GITHUB_ENV
           echo "WORK_ROOT_DIR=${PWD}/${{  github.event.client_payload.project_name }}" >> $GITHUB_ENV
           echo "==========="
           echo $(git rev-parse --abbrev-ref HEAD)
@@ -99,17 +99,19 @@ jobs:
           echo "export UTILS_DIR=$UTILS_DIR" >> $WORK_ROOT_DIR/.JENKINS.env
           echo "export WORK_ROOT_DIR=$WORK_ROOT_DIR" >> $WORK_ROOT_DIR/.JENKINS.env
           cat $WORK_ROOT_DIR/.JENKINS.env
-        working-directory: ./${{github.event.client_payload.project_name}}
+        working-directory: ./${{ github.event.client_payload.project_name }}
 
   #     - name: Generate git commit
   #       run: |
   #          bash $WORK_ROOT_DIR/myutils/quickspider/scripts/build_web.sh $WORK_ROOT_DIR/.JENKINS.env
 
-  #     - name: Build test
-  #       run: |
-  #         npm install
-  #         npm run build
-  #       working-directory: ./quick-spider-admin/web
+      - name: Build test
+        run: |
+          cd web
+          npm install
+          cd -
+          sh ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/build_server.sh ${JENKINS_ENV_PATH} || CheckLastResult
+        working-directory: ./${{ github.event.client_payload.project_name }}
 
 
         
