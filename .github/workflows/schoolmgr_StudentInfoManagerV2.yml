@@ -83,7 +83,7 @@ jobs:
       - name: Check out branch
         uses: actions/checkout@v2
 
-      - name: Clone quick_spider-admin
+      - name: Clone ${{  github.event.client_payload.project_name }}
         run: |
          git clone https://oauth2:${{ github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/StudentInfoManagerV2.git ./${{  github.event.client_payload.project_name }}
          git clone https://oauth2:${{  github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/myutils.git ./${{  github.event.client_payload.project_name }}/myutils
