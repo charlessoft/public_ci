@@ -17,6 +17,8 @@ on:
         type: string
 # env:
   # sss
+env:
+  TZ: Asia/Shanghai
 jobs:
   init:
     if: github.repository_owner == 'charlessoft'
