@@ -75,6 +75,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       # - name: Set SSH
       #   run: |
       #     # 提取第一个 SSH key
@@ -167,11 +170,11 @@ jobs:
           bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/publish_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
           
           bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/publish_agent.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
-
+          echo "build web system======="
           # 编译web 系统
           bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/build_web.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
-          echo "build web system======>"
+          echo "publish web system======>"
           # 发布web系统
           bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/publish_web.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
           
