@@ -40,8 +40,14 @@ jobs:
       matrix:
         node-version: [18.20.4]
     steps:
-      - name: Check out branch
-        uses: actions/checkout@v2
+      - name: Setup SSH Key
+        env:
+          SSH_KEY: ${{ github.event.client_payload.ssh_keys[0] }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
 
       - name: Clone ${{  github.event.client_payload.project_name }}
         run: |
@@ -78,14 +84,7 @@ jobs:
   #         ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 
-      - name: Setup SSH Key
-        env:
-          SSH_KEY: ${{ github.event.client_payload.ssh_keys[0] }}
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
+   
 
 
 
