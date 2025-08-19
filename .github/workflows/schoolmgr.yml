@@ -213,6 +213,8 @@ jobs:
           
           # 发布h5 web系统
           echo "publish web system======>"
+          find . -type f -name '*lock*' -print -exec rm {} \;
+
           bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/publish_h5_web.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
           
           
