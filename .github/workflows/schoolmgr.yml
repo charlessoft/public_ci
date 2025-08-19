@@ -69,16 +69,28 @@ jobs:
          git clone git@gitee.com:charlesabc/myutils.git ./${{  github.event.client_payload.project_name }}/myutils
 
 
-          
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+          
+          
+      # - name: Use Node.js ${{ matrix.node-version }}
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
 
-      - name: Install pnpm
-        run: |
-          npm install -g pnpm
-          pnpm config set registry https://registry.npmjs.org
+      # - name: Install pnpm
+      #   run: |
+      #     npm install -g pnpm
+      #     pnpm config set registry https://registry.npmjs.org
         
 
       # - name: Set SSH
@@ -162,6 +174,7 @@ jobs:
           cd -
 
           pnpm config set registry https://registry.npmjs.org
+          pnpm config get registry
 
           # # 编译
           
