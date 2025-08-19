@@ -81,7 +81,27 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-
+      - name: Set SSH
+        run: |
+          # 提取第一个 SSH key
+          FIRST_KEY=$(echo "${{ toJson(github.event.client_payload.ssh_keys) }}" | jq -r '.[0]')
+          
+          # 创建 .ssh 目录并保存 SSH key
+          mkdir -p ~/.ssh/
+          echo "$FIRST_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          
+          # 添加 GitHub 到 known_hosts
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+  
+  #     - name: Set SSH
+  #       env:
+  #         KEY: ${{ secrets.SSH_KEY }}
+  #       run: |
+  #         echo $KEY
+  #         mkdir -p ~/.ssh/ && echo "$KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+  #         ssh-keyscan github.com >> ~/.ssh/known_hosts
+  
       - name: Get current branch name
         id: get_branch
         run: |
@@ -111,7 +131,11 @@ jobs:
           cd webui
           npm install
           cd -
+          # 发布到麦小
           sh ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/build_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+
+          # 发布到观澜
+          sh ${WORKSPACE}/myutils/StudentInfoManagerV2/scripts/guanlan/deploy_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
         working-directory: ./${{ github.event.client_payload.project_name }}
 
 
