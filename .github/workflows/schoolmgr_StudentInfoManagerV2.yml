@@ -165,7 +165,7 @@ jobs:
           echo "发布到md"
           bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/build_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
-          bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/maixiao/deploy_server.sh ${JENKINS_ENV_PATH} || CheckLastResult
+          bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/maixiao/deploy_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
           # 发布到观澜
           echo "发布到gl"
