@@ -32,6 +32,15 @@ jobs:
 
           echo "${{ toJson(github.event.client_payload) }}" > client_payload.json
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.14.0'
+
+      - name: clone git code
+        run: |
+         git clone https://oauth2:${{ github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/StudentInfoManagerV2.git ./StudentInfoManagerV2
+         git clone https://oauth2:${{  github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/myutils.git ./StudentInfoManagerV2/myutils
       # - name: Setup Debug Session
       #   uses: csexton/debugger-action@master
   # frontend:
