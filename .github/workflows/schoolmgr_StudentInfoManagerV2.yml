@@ -29,7 +29,6 @@ jobs:
           echo "charlessoft"
           echo "${{ toJson(github.event.client_payload) }}"
           echo "charlessoft11"
-
           echo "${{ toJson(github.event.client_payload) }}" > client_payload.json
 
       # - name: Setup Node.js
@@ -107,10 +106,12 @@ jobs:
 
       - name: Build test
         run: |
+          pwd
+          ls
           cd web
           npm install
           cd -
-          sh ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/build_server.sh ${JENKINS_ENV_PATH} || CheckLastResult
+          sh ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/build_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
         working-directory: ./${{ github.event.client_payload.project_name }}
 
 
