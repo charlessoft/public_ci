@@ -31,20 +31,30 @@ jobs:
           echo "charlessoft11"
           echo "${{ toJson(github.event.client_payload) }}" > client_payload.json
 
-
-      - name: Set SSH
+      - name: Setup SSH Key
+        env:
+          SSH_KEY: ${{ github.event.client_payload.ssh_keys[0] }}
         run: |
-          # 提取第一个 SSH key
-          FIRST_KEY='${{ github.event.client_payload.ssh_keys[0] }}'
-          echo $FIRST_KEY
-          
-          # 创建 .ssh 目录并保存 SSH key
           mkdir -p ~/.ssh/
-          echo "$FIRST_KEY" > ~/.ssh/id_rsa
+          echo "$SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          
-          # 添加 GitHub 到 known_hosts
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      # - name: Set SSH
+      #   run: |
+      #     # 提取第一个 SSH key
+      #     FIRST_KEY='${{ github.event.client_payload.ssh_keys[0] }}'
+      #     echo $FIRST_KEY
+          
+      #     # 创建 .ssh 目录并保存 SSH key
+      #     mkdir -p ~/.ssh/
+      #     echo "$FIRST_KEY" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+          
+      #     # 添加 GitHub 到 known_hosts
+      #     ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+          
       # - name: Setup Node.js
       #   uses: actions/setup-node@v3
       #   with:
@@ -71,8 +81,8 @@ jobs:
       #   run: |
       #    git clone https://oauth2:${{ github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/StudentInfoManagerV2.git ./StudentInfoManagerV2
       #    git clone https://oauth2:${{  github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/myutils.git ./StudentInfoManagerV2/myutils
-      - name: Setup Debug Session
-        uses: csexton/debugger-action@master
+      # - name: Setup Debug Session
+      #   uses: csexton/debugger-action@master
   frontend:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'  || github.event_name == 'repository_dispatch'
     name: Frontend node ${{ matrix.node-version }}
