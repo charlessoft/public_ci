@@ -140,6 +140,10 @@ jobs:
   #          bash $WORK_ROOT_DIR/myutils/quickspider/scripts/build_web.sh $WORK_ROOT_DIR/.JENKINS.env
       # - name: Setup Debug Session
       #   uses: csexton/debugger-action@master
+
+      - name: Set Go proxy
+        run: echo "GOPROXY=https://proxy.golang.org,direct" >> $GITHUB_ENV
+
       - name: Build test
         shell: bash
         run: |
