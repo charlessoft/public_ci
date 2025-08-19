@@ -70,8 +70,8 @@ jobs:
       #   run: |
       #    git clone https://oauth2:${{ github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/StudentInfoManagerV2.git ./StudentInfoManagerV2
       #    git clone https://oauth2:${{  github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/myutils.git ./StudentInfoManagerV2/myutils
-      # - name: Setup Debug Session
-      #   uses: csexton/debugger-action@master
+      - name: Setup Debug Session
+        uses: csexton/debugger-action@master
   frontend:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'  || github.event_name == 'repository_dispatch'
     name: Frontend node ${{ matrix.node-version }}
@@ -151,9 +151,13 @@ jobs:
           npm install
           cd -
           # 发布到麦小
+          echo "发布到md"
           bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/build_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
+          bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/maixiao/deploy_server.sh ${JENKINS_ENV_PATH} || CheckLastResult
+
           # 发布到观澜
+          echo "发布到gl"
           bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/guanlan/deploy_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
         working-directory: ./${{ github.event.client_payload.project_name }}
 
