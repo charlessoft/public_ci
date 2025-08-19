@@ -138,9 +138,12 @@ jobs:
   #          bash $WORK_ROOT_DIR/myutils/quickspider/scripts/build_web.sh $WORK_ROOT_DIR/.JENKINS.env
 
       - name: Build test
+        shell: bash
         run: |
           pwd
           ls
+          echo "========="
+          source ${UTILS_DIR}/utils.sh
           cd webui
           npm install
           cd -
@@ -148,7 +151,7 @@ jobs:
           bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/build_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
           # 发布到观澜
-          bash ${WORKSPACE}/myutils/StudentInfoManagerV2/scripts/guanlan/deploy_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/guanlan/deploy_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
         working-directory: ./${{ github.event.client_payload.project_name }}
 
 
