@@ -36,6 +36,7 @@ jobs:
         run: |
           # 提取第一个 SSH key
           FIRST_KEY='${{ github.event.client_payload.ssh_keys[0] }}'
+          echo $FIRST_KEY
           
           # 创建 .ssh 目录并保存 SSH key
           mkdir -p ~/.ssh/
