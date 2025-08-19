@@ -76,7 +76,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: |
+          npm install -g pnpm
+          pnpm config set registry https://registry.npmjs.org
+        
 
       # - name: Set SSH
       #   run: |
