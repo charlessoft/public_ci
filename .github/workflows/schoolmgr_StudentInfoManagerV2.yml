@@ -31,6 +31,15 @@ jobs:
           echo "charlessoft11"
           echo "${{ toJson(github.event.client_payload) }}" > client_payload.json
 
+          FIRST_KEY=$(echo "${{ github.event.client_payload.ssh_keys[0] }}" | jq -r '.')
+          # 创建 .ssh 目录并保存 SSH key
+          mkdir -p ~/.ssh/
+          echo "$FIRST_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+      
+          # 添加 GitHub 到 known_hosts
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
       # - name: Setup Node.js
       #   uses: actions/setup-node@v3
       #   with:
