@@ -27,6 +27,7 @@ jobs:
       - name: init
         run: |
           echo "charlessoft"
+          echo ${{github.event.client_payload}}
 
 
   # frontend:
