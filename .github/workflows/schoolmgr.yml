@@ -280,7 +280,7 @@ jobs:
             {
               "msgtype": "text",
               "text": {
-                  "content": '[打叉][打叉][打叉]  执行失败\n提交者:  ${{ github.event.client_payload.ext.pusher.username }}\n任务: ${{ github.event.pull_request.title }}\n${{ github.ref_type }}: ${{ github.event.client_payload.mybranch }}\n${{ github.event_name }}: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.number }}'
+                  "content": '[打叉][打叉][打叉]  执行失败\n提交者:  ${{ github.event.client_payload.ext.pusher.username }}\n任务: ${{ github.event.pull_request.title }}\n${{ github.ref_type }}: ${{ github.event.client_payload.mybranch }}\nlog: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
              }
              }
             
@@ -300,7 +300,7 @@ jobs:
             {
              "msgtype": "text",
              "text": {
-                 "content": '[微笑][微笑][微笑]  执行成功\n提交者: ${{ github.event.client_payload.ext.pusher.username }}\n任务: ${{ github.event.pull_request.title }}\n${{ github.ref_type }}: ${{ github.event.client_payload.mybranch }}\n${{ github.event_name }}: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.number }}'
+                 "content": '[微笑][微笑][微笑]  执行成功\n提交者: ${{ github.event.client_payload.ext.pusher.username }}\n任务: ${{ github.event.pull_request.title }}\n${{ github.ref_type }}: ${{ github.event.client_payload.mybranch }}\nlog: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
              }
              }
   
