@@ -65,10 +65,33 @@ jobs:
 
       - name: Clone ${{  github.event.client_payload.project_name }}
         run: |
-         # BRANCH_NAME=$(echo "${{ github.event.client_payload.mybranch }}" | sed 's|refs/heads/||')
-         # echo $BRANCH_NAME
-         git clone  ${{ github.event.client_payload.git_url }} ./${{  github.event.client_payload.project_name }}
-         git clone git@gitee.com:charlesabc/myutils.git ./${{  github.event.client_payload.project_name }}/myutils
+          # 提取分支名称（去掉 refs/heads/ 前缀）
+          BRANCH_NAME=$(echo "${{ github.event.client_payload.mybranch }}" | sed 's|refs/heads/||')
+          echo "切换到分支: $BRANCH_NAME"
+          
+          # 克隆仓库
+          git clone ${{ github.event.client_payload.git_url }} ./${{  github.event.client_payload.project_name }}
+          
+          # 进入项目目录并切换分支
+          cd ./${{  github.event.client_payload.project_name }}
+          
+          # 如果是远程分支，先获取所有分支信息
+          git fetch origin
+          
+          # 切换到指定分支（如果分支不存在会自动创建并跟踪远程分支）
+          git checkout -B $BRANCH_NAME origin/$BRANCH_NAME || git checkout $BRANCH_NAME
+          
+          # 返回上级目录
+          cd ..
+          
+          # 克隆 myutils
+          git clone git@gitee.com:charlesabc/myutils.git ./${{  github.event.client_payload.project_name }}/myutils
+
+          
+         # # BRANCH_NAME=$(echo "${{ github.event.client_payload.mybranch }}" | sed 's|refs/heads/||')
+         # # echo $BRANCH_NAME
+         # git clone  ${{ github.event.client_payload.git_url }} ./${{  github.event.client_payload.project_name }}
+         # git clone git@gitee.com:charlesabc/myutils.git ./${{  github.event.client_payload.project_name }}/myutils
 
 
       - uses: pnpm/action-setup@v4
