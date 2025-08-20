@@ -303,7 +303,7 @@ jobs:
             {
               "msgtype": "text",
               "text": {
-                  "content": '[打叉][打叉][打叉]  执行失败\n提交者:  ${{ github.event.client_payload.ext.pusher.username }}\n任务: ${{ github.event.pull_request.title }}\n${{ github.ref_type }}: ${{ github.event.client_payload.mybranch }}\nlog: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+                  "content": 'status:[打叉][打叉][打叉]  ${{ github.event.client_payload.ext.repository }} 执行失败\n提交者:  ${{ github.event.client_payload.ext.pusher.username }}\n${{ github.ref_type }}: ${{ github.event.client_payload.mybranch }}\nlog: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
              }
              }
             
@@ -323,7 +323,7 @@ jobs:
             {
              "msgtype": "text",
              "text": {
-                 "content": '[微笑][微笑][微笑]  执行成功\n提交者: ${{ github.event.client_payload.ext.pusher.username }}\n任务: ${{ github.event.pull_request.title }}\n${{ github.ref_type }}: ${{ github.event.client_payload.mybranch }}\nlog: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+                 "content": 'status:[对勾][对勾][对勾][100分]  ${{ github.event.client_payload.ext.repository }} 执行成功\n提交者: ${{ github.event.client_payload.ext.pusher.username }}\n${{ github.ref_type }}: ${{ github.event.client_payload.mybranch }}\nlog: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
              }
              }
   
