@@ -1,0 +1,74 @@
+
+name: test
+
+
+on:
+  repository_dispatch:
+    types:
+      - test
+  push:
+    branches: [ '*' ]
+  pull_request:
+  release:
+    types: [ created, edited ]
+  workflow_dispatch:
+    inputs:
+      gva_version:
+        required: true
+        type: string
+# env:
+  # sss
+env:
+  TZ: Asia/Shanghai
+jobs:
+  init:
+    if: github.repository_owner == 'charlessoft'
+    # runs-on: ubuntu-latest
+    runs-on: macos-latest
+    steps:
+      - name: init
+        run: |
+          echo "charlessoft"
+          echo "${{ toJson(github.event.client_payload) }}"
+          echo "charlessoft11"
+          echo "${{ toJson(github.event.client_payload) }}" > client_payload.json
+
+
+  dingding-error:
+    runs-on: ubuntu-latest
+    needs: [init]
+    if: ${{ failure() }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send dingding notify error
+        uses: zcong1993/actions-ding@master
+        with:
+          dingToken: fd87df4f83611b4c4cf31d5ad48f890f9603b57b1cac3d52fb80df8b86a5b629 #钉钉token
+          secret: SECbe4003c4d14c740788cf9383fa1d8d77c029a03e6df99dde528274b9bcc17926
+          body: |
+            {
+              "msgtype": "text",
+              "text": {
+                  "content": '[打叉][打叉][打叉]  执行失败\n提交者: ${{ github.triggering_actor }}\n任务: ${{ github.event.pull_request.title }}\n${{ github.ref_type }}: ${{ github.head_ref }}\n${{ github.event_name }}: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.number }}'
+             }
+             }
+            
+
+  dingding-success:
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    needs: [init]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send dingding notify success
+        uses: zcong1993/actions-ding@master
+        with:
+          dingToken: fd87df4f83611b4c4cf31d5ad48f890f9603b57b1cac3d52fb80df8b86a5b629 #钉钉token
+          secret: SECbe4003c4d14c740788cf9383fa1d8d77c029a03e6df99dde528274b9bcc17926
+          body: |
+            {
+             "msgtype": "text",
+             "text": {
+                 "content": '[微笑][微笑][微笑]  执行成功\n提交者: ${{ github.triggering_actor }}\n任务: ${{ github.event.pull_request.title }}\n${{ github.ref_type }}: ${{ github.head_ref }}\n${{ github.event_name }}: ${{ github.server_url }}/${{ github.repository }}/pull/${{ github.event.number }}'
+             }
+             }
