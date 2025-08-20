@@ -247,23 +247,23 @@ jobs:
         working-directory: ./${{ github.event.client_payload.project_name }}
 
 
-      - name: Check Status
-        if: ${{ success() }}
-        shell: pwsh
-        run: |
-          $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
+      # - name: Check Status
+      #   if: ${{ success() }}
+      #   shell: pwsh
+      #   run: |
+      #     $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
           
-          Write-Host "Workflow succeeded for $repoName!"
-          dding "github action success :):):) for ./${{ github.event.client_payload.project_name }}"
+      #     Write-Host "Workflow succeeded for $repoName!"
+      #     dding "github action success :):):) for ./${{ github.event.client_payload.project_name }}"
           
 
-      - name: Check Status
-        if: ${{ failure() }}
-        shell: pwsh
-        run: |
-          $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
-          Write-Host "Workflow failed for $repoName!"
-          dding "github action fail!!! :( ./${{ github.event.client_payload.project_name }}"
+      # - name: Check Status
+      #   if: ${{ failure() }}
+      #   shell: pwsh
+      #   run: |
+      #     $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
+      #     Write-Host "Workflow failed for $repoName!"
+      #     dding "github action fail!!! :( ./${{ github.event.client_payload.project_name }}"
 
   dingding-error:
     runs-on: ubuntu-latest
