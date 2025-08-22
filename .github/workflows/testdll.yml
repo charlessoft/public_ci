@@ -25,6 +25,10 @@ jobs:
     if: github.repository_owner == 'charlessoft'
     # runs-on: ubuntu-latest
     runs-on: windows-latest
+    strategy:
+      matrix:
+        platform: [x64, x86]
+        # configuration: [Release]
     steps:
       - name: init
         run: |
@@ -38,23 +42,35 @@ jobs:
       
       # - name: Build your project
       #   run: msbuild YourProject.sln /p:Configuration=Release
-      
-      - name: Copy Universal CRT DLLs
-        shell: cmd
+
+      - name: Copy UCRT DLLs
         run: |
-          # 创建目标目录
           mkdir dist
+          $platform = "${{ matrix.platform }}"
+          if ($platform -eq "x86") { $platform = "x86" }  # 确保格式正确
           
-          # 从 Windows SDK 复制 UCRT DLLs (x64)
-          copy "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\*.dll" dist\
-          dir dist
+          $ucrtPath = "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\$platform"
+          Copy-Item "$ucrtPath\*.dll" -Destination "dist\" -Force
+          echo "$platform"
+        shell: powershell
+  
+      # - name: Copy Universal CRT DLLs
+      #   shell: cmd
+      #   run: |
+      #     # 创建目标目录
+      #     mkdir dist
           
-          # 或者从系统目录复制 (备选方案)
-          # copy "C:\Windows\System32\ucrtbase.dll" dist\
-          # copy "C:\Windows\System32\api-ms-win-crt-*.dll" dist\
           
-          # 复制你的编译产物
-          # copy "Release\YourApp.exe" dist\
+      #     # 从 Windows SDK 复制 UCRT DLLs (x64)
+      #     copy "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\*.dll" dist\
+      #     dir dist
+          
+      #     # 或者从系统目录复制 (备选方案)
+      #     # copy "C:\Windows\System32\ucrtbase.dll" dist\
+      #     # copy "C:\Windows\System32\api-ms-win-crt-*.dll" dist\
+          
+      #     # 复制你的编译产物
+      #     # copy "Release\YourApp.exe" dist\
       
       # - name: Upload artifacts
       #   uses: actions/upload-artifact@v3
