@@ -52,6 +52,7 @@ jobs:
           $ucrtPath = "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\$platform"
           Copy-Item "$ucrtPath\*.dll" -Destination "dist\" -Force
           echo "$platform"
+          dir dist
         shell: powershell
   
       # - name: Copy Universal CRT DLLs
