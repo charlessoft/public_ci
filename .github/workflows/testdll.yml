@@ -1,0 +1,62 @@
+
+name: testdll
+
+
+on:
+  repository_dispatch:
+    types:
+      - testdll
+  push:
+    branches: [ '*' ]
+  pull_request:
+  release:
+    types: [ created, edited ]
+  workflow_dispatch:
+    inputs:
+      gva_version:
+        required: true
+        type: string
+# env:
+  # sss
+env:
+  TZ: Asia/Shanghai
+jobs:
+  init:
+    if: github.repository_owner == 'charlessoft'
+    # runs-on: ubuntu-latest
+    runs-on: macos-latest
+    steps:
+      - name: init
+        run: |
+          echo "charlessoft"
+          # echo "${{ toJson(github.event.client_payload) }}"
+          # echo "charlessoft11"
+          # echo "${{ toJson(github.event.client_payload) }}" > client_payload.json
+
+      # - name: Setup MSBuild
+      #   uses: microsoft/setup-msbuild@v1
+      
+      # - name: Build your project
+      #   run: msbuild YourProject.sln /p:Configuration=Release
+      
+      - name: Copy Universal CRT DLLs
+        run: |
+          # 创建目标目录
+          mkdir dist
+          
+          # 从 Windows SDK 复制 UCRT DLLs (x64)
+          copy "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\*.dll" dist\
+          dir dist
+          
+          # 或者从系统目录复制 (备选方案)
+          # copy "C:\Windows\System32\ucrtbase.dll" dist\
+          # copy "C:\Windows\System32\api-ms-win-crt-*.dll" dist\
+          
+          # 复制你的编译产物
+          # copy "Release\YourApp.exe" dist\
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-with-runtime
+          path: dist/
