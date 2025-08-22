@@ -55,8 +55,8 @@ jobs:
           # 复制你的编译产物
           # copy "Release\YourApp.exe" dist\
       
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: app-with-runtime
-          path: dist/
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: app-with-runtime
+      #     path: dist/
