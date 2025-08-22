@@ -40,6 +40,7 @@ jobs:
       #   run: msbuild YourProject.sln /p:Configuration=Release
       
       - name: Copy Universal CRT DLLs
+        shell: cmd
         run: |
           # 创建目标目录
           mkdir dist
