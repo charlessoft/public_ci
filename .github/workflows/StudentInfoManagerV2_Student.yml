@@ -168,10 +168,10 @@ jobs:
           cd -
           # 编译
 
-          sh ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/build_stu_server.sh ${JENKINS_ENV_PATH} || CheckLastResult
+          sh ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/build_stu_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
           # 发布到develop
-          #sh ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/develop/deploy_stu_server.sh ${JENKINS_ENV_PATH} || CheckLastResult
+          #sh ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/develop/deploy_stu_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
           # 发布到麦小
           sh ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/maixiao/deploy_stu_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
