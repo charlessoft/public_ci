@@ -170,16 +170,16 @@ jobs:
           cd -
           # 编译
 
-          sh ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/build_stu_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/build_stu_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
           # 发布到develop
           #sh ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/develop/deploy_stu_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
           # 发布到麦小
-          sh ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/maixiao/deploy_stu_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/maixiao/deploy_stu_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
           # 发布到观澜
-          sh ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/guanlan/deploy_stu_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/guanlan/deploy_stu_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
 
         working-directory: ./${{ github.event.client_payload.project_name }}
