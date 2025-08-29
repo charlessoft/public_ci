@@ -158,6 +158,12 @@ jobs:
           source ${UTILS_DIR}/utils.sh
           cd -
           
+          git log -5  >> git.log
+
+          gitContent=`cat git.log`
+          dding --group student --content "${gitContent}" --title "${{ github.event.client_payload.project_name }}" --msgtype "markdown"
+
+          
           cd webui
           npm install
           cd -
