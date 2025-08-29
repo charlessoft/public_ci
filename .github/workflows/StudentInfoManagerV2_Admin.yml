@@ -140,7 +140,10 @@ jobs:
           echo "export BRANCH=$BRANCH " >> $WORK_ROOT_DIR/.JENKINS.env
           echo "export UTILS_DIR=$UTILS_DIR" >> $WORK_ROOT_DIR/.JENKINS.env
           echo "export WORK_ROOT_DIR=$WORK_ROOT_DIR" >> $WORK_ROOT_DIR/.JENKINS.env
+          
+          echo "=====================showing .JENKINS.env====================="
           cat $WORK_ROOT_DIR/.JENKINS.env
+          echo "=====================showing .JENKINS.env====================="
         working-directory: ./${{ github.event.client_payload.project_name }}
 
   #     - name: Generate git commit
@@ -161,7 +164,7 @@ jobs:
           git log -5  >> git.log
 
           gitContent=`cat git.log`
-          dding --group student --content "${gitContent}" --title "${{ github.event.client_payload.project_name }}" --msgtype "markdown"
+          #dding --group student --content "${gitContent}" --title "${{ github.event.client_payload.project_name }}" --msgtype "markdown"
 
           
           cd webui
