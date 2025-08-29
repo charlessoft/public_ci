@@ -4,7 +4,7 @@ name: StudentInfoManagerV2_student
 on:
   repository_dispatch:
     types:
-      - schoolmgr_student_StudentInfoManagerV2
+      - StudentInfoManagerV2_student
   push:
     branches: [ '*' ]
   pull_request:
