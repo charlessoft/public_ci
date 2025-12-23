@@ -52,6 +52,17 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: Setup SSH Key
+        env:
+          SSH_KEY: ${{ github.event.client_payload.ssh_keys[0] }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          cat ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          ssh-keyscan gitee.com >> ~/.ssh/known_hosts
           
       - name: Check out branch
         uses: actions/checkout@v2
