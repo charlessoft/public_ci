@@ -29,8 +29,8 @@ jobs:
         run: |
           echo "charlessoft"
           # echo "${{ toJson(github.event.client_payload) }}"
-          # echo "charlessoft11"
-          # echo "${{ toJson(github.event.client_payload) }}" > client_payload.json
+          echo "charlessoft11"
+          echo "${{ toJson(github.event.client_payload) }}" > client_payload.json
 
 
 
