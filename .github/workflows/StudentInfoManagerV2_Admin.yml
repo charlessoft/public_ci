@@ -28,9 +28,9 @@ jobs:
       - name: init
         run: |
           echo "charlessoft"
-          echo "${{ toJson(github.event.client_payload) }}"
-          echo "charlessoft11"
-          echo "${{ toJson(github.event.client_payload) }}" > client_payload.json
+          # echo "${{ toJson(github.event.client_payload) }}"
+          # echo "charlessoft11"
+          # echo "${{ toJson(github.event.client_payload) }}" > client_payload.json
 
 
 
@@ -48,13 +48,20 @@ jobs:
       matrix:
         node-version: [16.14.0]
     steps:
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+          
       - name: Check out branch
         uses: actions/checkout@v2
 
       - name: Clone ${{  github.event.client_payload.project_name }}
         run: |
-         git clone https://oauth2:${{ github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/StudentInfoManagerV2.git ./${{  github.event.client_payload.project_name }}
-         git clone https://oauth2:${{  github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/myutils.git ./${{  github.event.client_payload.project_name }}/myutils
+         # git clone https://oauth2:${{ github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/StudentInfoManagerV2.git ./${{  github.event.client_payload.project_name }}
+         # git clone https://oauth2:${{  github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/myutils.git ./${{  github.event.client_payload.project_name }}/myutils
+         git clone ${{ github.event.client_payload.git_url }} ./${{  github.event.client_payload.project_name }}
+         git clone git@gitee.com/charlesabc/myutils.git ./${{  github.event.client_payload.project_name }}/myutils
          # find ./${{  github.event.client_payload.project_name }}/myutils -name "*.sh" -type f -exec dos2unix {} \;
 
           
