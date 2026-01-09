@@ -273,7 +273,7 @@ jobs:
           # 英才
           echo "部署英才小学"
           echo "docker_deploy yc  environment ======>"
-          bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/yingaci/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          bash ${WORK_ROOT_DIR}/myutils/schoolmgr/scripts/yingcai/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
 
         working-directory: ./${{ github.event.client_payload.project_name }}
