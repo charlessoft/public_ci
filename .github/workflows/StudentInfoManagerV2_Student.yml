@@ -72,7 +72,8 @@ jobs:
          # git clone https://oauth2:${{ github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/StudentInfoManagerV2.git ./${{  github.event.client_payload.project_name }}
          # git clone https://oauth2:${{  github.event.client_payload.gitee_token  }}@gitee.com/charlesabc/myutils.git ./${{  github.event.client_payload.project_name }}/myutils
          git clone ${{ github.event.client_payload.git_url }} ./${{  github.event.client_payload.project_name }}
-         git clone git@gitee.com:charlesabc/myutils.git ./${{  github.event.client_payload.project_name }}/myutils
+         # git clone git@gitee.com:charlesabc/myutils.git ./${{  github.event.client_payload.project_name }}/myutils
+         git clone git@github.com:charlessoft/myutils.git ./${{  github.event.client_payload.project_name }}/myutils
          # find ./${{  github.event.client_payload.project_name }}/myutils -name "*.sh" -type f -exec dos2unix {} \;
 
           
@@ -194,7 +195,7 @@ jobs:
           bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/develop/deploy_stu_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
           # 发布到麦小
-          #bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/maixiao/deploy_stu_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/maixiao/deploy_stu_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
           # 发布到观澜
           #bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/guanlan/deploy_stu_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
