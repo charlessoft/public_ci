@@ -201,8 +201,8 @@ jobs:
           echo "发布到gl"
           bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/guanlan/deploy_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
-          # 发布到麦小
-          # bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/develop/deploy_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
+          # 发布到develop
+          bash ${WORK_ROOT_DIR}/myutils/StudentInfoManagerV2/scripts/develop/deploy_server.sh $WORK_ROOT_DIR/.JENKINS.env || CheckLastResult
 
 
         working-directory: ./${{ github.event.client_payload.project_name }}
